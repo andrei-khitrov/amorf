@@ -1,0 +1,425 @@
+/* ============================================================
+   AMORF — дизайн-система. Единственный источник значений.
+   Палитра и семейство easing пересажены с bymonolog.com,
+   техническая рейка — с cinetica.studio / 2xa.studio.
+   ============================================================ */
+
+/* ---------- Шрифты (архив: noth.in, rechroma.com) ---------- */
+@font-face{font-family:"Neue Montreal";font-weight:100;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-Thin.woff2") format("woff2")}
+@font-face{font-family:"Neue Montreal";font-weight:300;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-Light.woff2") format("woff2")}
+@font-face{font-family:"Neue Montreal";font-weight:400;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-Book.woff2") format("woff2")}
+@font-face{font-family:"Neue Montreal";font-weight:500;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-Medium.woff2") format("woff2")}
+@font-face{font-family:"Neue Montreal";font-weight:600;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Neue Montreal";font-weight:700;font-style:normal;font-display:swap;
+  src:url("../fonts/PPNeueMontreal-Bold.woff2") format("woff2")}
+@font-face{font-family:"Geist Mono";font-weight:100 900;font-style:normal;font-display:swap;
+  src:url("../fonts/GeistMono-Variable.woff2") format("woff2")}
+
+:root{
+  /* ---------- Палитра ---------- */
+  --bg:#080807;              /* фон, bymonolog rgb(8,8,7) */
+  --bg-2:#0d0d0c;
+  --surface:#141413;
+  --surface-2:#1c1b19;
+  --text:#e8e8e3;            /* bymonolog rgb(232,232,227) */
+  --muted:#938f8a;           /* bymonolog rgb(147,143,138) */
+  --dim:#7d7972;   /* ≥4.5:1 на фоне — читаемо в мелком кегле */
+  --line:rgba(232,232,227,.14);
+  --line-2:rgba(232,232,227,.07);
+  --line-3:rgba(232,232,227,.28);
+  --plate:#b4b2ac;           /* тон подложки товарной съёмки — им же красится растр */
+  --ink:#141414;
+  --hot:#ff4a1c;             /* единственный акцент. Только фазовый переход, цена-скидка, ошибка формы */
+  --hot-dim:rgba(255,74,28,.16);
+  --ok:#9ad1a4;
+  --chrome:linear-gradient(168deg,#ffffff 0%,#c9ccd2 22%,#71757c 46%,#eceef1 62%,#8d9198 82%,#f4f5f7 100%);
+
+  /* ---------- Типографика ---------- */
+  --f:"Neue Montreal","Helvetica Neue",Arial,system-ui,sans-serif;
+  --f-mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --t-xs:clamp(9.5px,.72vw,11px);
+  --t-sm:clamp(11.5px,.82vw,12.5px);
+  --t-s:clamp(13px,.95vw,14px);
+  --t-m:clamp(15px,1.05vw,17px);
+  --t-l:clamp(20px,1.7vw,27px);
+  --t-xl:clamp(30px,4.1vw,64px);
+  --t-2xl:clamp(44px,8.2vw,132px);
+  --t-3xl:clamp(64px,15.4vw,248px);
+
+  /* ---------- Отступы ---------- */
+  --s1:4px; --s2:8px; --s3:16px; --s4:24px; --s5:40px;
+  --s6:64px; --s7:96px; --s8:140px; --s9:200px;
+  --sec:clamp(76px,9.2vw,150px);       /* вертикальный ритм секций */
+  --pad:clamp(16px,2.6vw,38px);        /* горизонтальные поля контента */
+  --rail:0px;                          /* ширина краевой рейки, включается на ≥1100 */
+  --gap:clamp(12px,1.3vw,22px);
+  --maxw:1720px;
+
+  /* ---------- Движение (bymonolog.com) ---------- */
+  --e:cubic-bezier(.16,1,.35,1);
+  --e-soft:cubic-bezier(.2,1,.36,1);
+  --e-acc:cubic-bezier(.625,.05,0,1);
+  --d-fast:.25s;
+  --d:.65s;
+  --d-slow:1.05s;
+
+  --hdr:58px;                          /* высота шапки */
+  --bar:26px;                          /* высота бегущей строки объявлений */
+
+  /* Зерно: генеративная текстура, ноль запросов */
+  --noise:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.86' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+}
+@media (min-width:1100px){ :root{ --rail:34px; --hdr:64px } }
+
+/* ============================================================
+   База
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:auto}
+body{
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:var(--f);font-weight:400;font-size:var(--t-m);line-height:1.5;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+body.is-locked{overflow:hidden}
+img,svg,canvas,video{display:block;max-width:100%}
+img{height:auto}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+input,textarea,select{font:inherit;color:inherit}
+ul,ol{margin:0;padding:0;list-style:none}
+h1,h2,h3,h4,p,figure,blockquote{margin:0}
+table{border-collapse:collapse;width:100%}
+::selection{background:var(--text);color:var(--bg)}
+
+:focus-visible{outline:1px solid var(--hot);outline-offset:3px}
+.sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0}
+.skip{position:absolute;left:-9999px;top:0;z-index:200;background:var(--text);color:var(--bg);
+  padding:10px 16px;font:500 13px/1 var(--f-mono)}
+.skip:focus{left:8px;top:8px}
+
+/* ============================================================
+   Типографические классы
+   ============================================================ */
+.lbl{font-family:var(--f-mono);font-size:var(--t-xs);font-weight:400;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--muted)}
+.lbl--b::before{content:"[ "}
+.lbl--b::after{content:" ]"}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.h-display{font-size:var(--t-3xl);font-weight:500;line-height:.82;letter-spacing:-.045em;
+  text-transform:uppercase}
+.h-1{font-size:var(--t-2xl);font-weight:500;line-height:.88;letter-spacing:-.035em;text-transform:uppercase}
+.h-2{font-size:var(--t-xl);font-weight:500;line-height:.95;letter-spacing:-.028em;text-transform:uppercase}
+.h-3{font-size:var(--t-l);font-weight:400;line-height:1.12;letter-spacing:-.018em}
+.h-thin{font-weight:100;letter-spacing:-.03em}
+.lead{font-size:var(--t-l);font-weight:300;line-height:1.32;letter-spacing:-.012em;color:var(--text)}
+.body{font-size:var(--t-m);line-height:1.55;color:var(--muted);max-width:62ch}
+.body--w{color:var(--text)}
+.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+/* ============================================================
+   Каркас страницы
+   ============================================================ */
+.wrap{width:100%;max-width:var(--maxw);margin:0 auto;padding-inline:calc(var(--pad) + var(--rail))}
+.wrap--flush{padding-inline:calc(var(--rail))}
+.section{padding-block:var(--sec);position:relative}
+.section--tight{padding-block:calc(var(--sec) * .58)}
+.rule{height:1px;background:var(--line);border:0;margin:0}
+.grid12{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:var(--gap)}
+
+/* Краевая рейка экрана — cinetica.studio / 2xa.studio */
+.rails{position:fixed;inset:0;z-index:60;pointer-events:none;display:none}
+@media (min-width:1100px){.rails{display:block}}
+.rails::before,.rails::after{content:"";position:absolute;top:0;bottom:0;width:1px;background:var(--line-2)}
+.rails::before{left:var(--rail)}
+.rails::after{right:var(--rail)}
+.rail-txt{position:absolute;top:50%;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--dim);white-space:nowrap}
+.rail-txt--l{left:0;width:var(--rail);text-align:center;transform:translateY(-50%) rotate(180deg);writing-mode:vertical-rl}
+.rail-txt--r{right:0;width:var(--rail);text-align:center;transform:translateY(-50%);writing-mode:vertical-rl}
+
+/* Зерно — bymonolog.com: grain-animation .5s steps(6) infinite на transform */
+.grain{position:fixed;inset:-160%;z-index:70;pointer-events:none;opacity:.16;
+  background-image:var(--noise);background-size:180px 180px;
+  animation:grain-shift .5s steps(6) infinite;will-change:transform;mix-blend-mode:overlay}
+@keyframes grain-shift{
+  0%,100%{transform:translate(0,0)} 17%{transform:translate(-4%,-6%)}
+  33%{transform:translate(-9%,3%)} 50%{transform:translate(5%,-8%)}
+  67%{transform:translate(-2%,7%)} 83%{transform:translate(7%,2%)}
+}
+
+/* Прогресс скролла */
+.progress{position:fixed;top:0;left:0;height:1px;width:100%;transform:scaleX(0);transform-origin:0 50%;
+  background:var(--text);z-index:95;pointer-events:none}
+
+/* ============================================================
+   Кнопки и ссылки
+   ============================================================ */
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;
+  padding:14px 26px;border:1px solid var(--line-3);border-radius:999px;
+  font-family:var(--f-mono);font-size:var(--t-sm);letter-spacing:.14em;text-transform:uppercase;
+  overflow:hidden;isolation:isolate;
+  transition:color var(--d-fast) var(--e),border-color var(--d-fast) var(--e)}
+.btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--text);
+  transform:translateY(101%);transition:transform var(--d) var(--e)}
+.btn:hover,.btn:focus-visible{color:var(--bg);border-color:var(--text)}
+.btn:hover::before,.btn:focus-visible::before{transform:translateY(0)}
+.btn--solid{background:var(--text);color:var(--bg);border-color:var(--text)}
+.btn--solid::before{background:var(--bg)}
+.btn--solid:hover,.btn--solid:focus-visible{color:var(--text)}
+.btn--hot{border-color:var(--hot);color:var(--hot)}
+.btn--hot::before{background:var(--hot)}
+.btn--hot:hover,.btn--hot:focus-visible{color:var(--bg);border-color:var(--hot)}
+.btn--lg{padding:18px 34px;font-size:var(--t-s)}
+.btn--block{width:100%;justify-content:center}
+.btn[disabled]{opacity:.4;pointer-events:none}
+
+/* Ссылка с подчёркиванием, растущим слева (bymonolog: ::after 0→100% за .4s) */
+.ulink{position:relative;display:inline-block}
+.ulink::after{content:"";position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:100% 50%;transition:transform var(--d) var(--e)}
+.ulink:hover::after,.ulink:focus-visible::after{transform:scaleX(1);transform-origin:0 50%}
+
+/* Ссылка со сменой текста вверх (bymonolog .g_btn_text, .65s) */
+.swap{position:relative;display:inline-block;overflow:hidden;vertical-align:top}
+.swap__i{display:block;transition:transform var(--d) var(--e)}
+.swap__i--b{position:absolute;left:0;top:100%}
+.swap:hover .swap__i,.swap:focus-visible .swap__i{transform:translateY(-100%)}
+
+/* ============================================================
+   Курсор
+   ============================================================ */
+.cursor{position:fixed;top:0;left:0;z-index:120;pointer-events:none;mix-blend-mode:difference;
+  opacity:0;transition:opacity .17s cubic-bezier(.626,.011,.25,1)}
+.cursor.is-on{opacity:1}
+.cursor__dot{position:absolute;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:#fff}
+.cursor__ring{position:absolute;width:38px;height:38px;margin:-19px 0 0 -19px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.6);
+  transition:width var(--d) var(--e),height var(--d) var(--e),margin var(--d) var(--e),
+             border-color var(--d-fast) var(--e)}
+.cursor__txt{position:absolute;transform:translate(-50%,-50%);font-family:var(--f-mono);font-size:9.5px;
+  letter-spacing:.16em;text-transform:uppercase;color:#fff;opacity:0;white-space:nowrap;
+  transition:opacity .2s var(--e)}
+.cursor.is-lg .cursor__ring{width:74px;height:74px;margin:-37px 0 0 -37px}
+.cursor.is-lg .cursor__txt{opacity:1}
+@media (hover:none),(pointer:coarse){.cursor{display:none}}
+
+/* ============================================================
+   Шапка, объявления, меню
+   ============================================================ */
+.ticker{position:relative;z-index:80;height:var(--bar);background:var(--text);color:var(--bg);
+  display:flex;align-items:center;overflow:hidden}
+.ticker__track{display:flex;gap:0;white-space:nowrap;will-change:transform;
+  animation:tick 38s linear infinite}
+.ticker:hover .ticker__track{animation-play-state:paused}
+.ticker__i{font-family:var(--f-mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+  padding-inline:22px;display:inline-flex;align-items:center;gap:22px}
+.ticker__i::after{content:"◆";font-size:6px;opacity:.55}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+.hdr{position:sticky;top:0;z-index:90;height:var(--hdr);
+  border-bottom:1px solid var(--line-2);
+  background:color-mix(in srgb,var(--bg) 78%,transparent);backdrop-filter:blur(14px);
+  transition:transform var(--d) var(--e),background var(--d-fast) var(--e)}
+.hdr.is-hidden{transform:translateY(-104%)}
+.hdr__in{height:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--s4)}
+.hdr__brand{display:flex;align-items:center;gap:10px}
+.hdr__sig{width:19px;height:19px;flex:none}
+.hdr__word{font-weight:600;font-size:15px;letter-spacing:.3em;text-transform:uppercase;
+  padding-left:2px}
+.hdr__nav{display:none;gap:var(--s5)}
+@media (min-width:900px){.hdr__nav{display:flex}}
+.hdr__nav a{font-family:var(--f-mono);font-size:var(--t-sm);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);transition:color var(--d-fast) var(--e)}
+.hdr__nav a:hover,.hdr__nav a[aria-current="page"]{color:var(--text)}
+.hdr__side{display:flex;align-items:center;gap:var(--s3)}
+.hdr__act{font-family:var(--f-mono);font-size:var(--t-sm);letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);transition:color var(--d-fast) var(--e);display:inline-flex;align-items:center;gap:6px}
+.hdr__act:hover,.hdr__act:focus-visible{color:var(--text)}
+.hdr__count{font-variant-numeric:tabular-nums}
+.snd{width:30px;height:30px;aspect-ratio:1/1;display:grid;place-items:center;border:1px solid var(--line);
+  border-radius:50%;color:var(--muted);transition:color var(--d-fast) var(--e),border-color var(--d-fast) var(--e)}
+.snd:hover,.snd:focus-visible{color:var(--text);border-color:var(--line-3)}
+.snd[aria-pressed="true"]{color:var(--text);border-color:var(--text)}
+.snd__bars{display:flex;align-items:flex-end;gap:2px;height:11px}
+.snd__bars i{width:2px;background:currentColor;height:3px;display:block}
+.snd[aria-pressed="true"] .snd__bars i{animation:eq .9s ease-in-out infinite}
+.snd[aria-pressed="true"] .snd__bars i:nth-child(2){animation-delay:.15s}
+.snd[aria-pressed="true"] .snd__bars i:nth-child(3){animation-delay:.3s}
+.snd[aria-pressed="true"] .snd__bars i:nth-child(4){animation-delay:.45s}
+@keyframes eq{0%,100%{height:3px}50%{height:11px}}
+.burg{width:30px;height:30px;display:grid;place-content:center;gap:5px}
+@media (min-width:900px){.burg{display:none}}
+.burg i{display:block;width:17px;height:1px;background:currentColor;transition:transform var(--d) var(--e)}
+
+/* Оверлей-меню */
+.ovl{position:fixed;inset:0;z-index:110;background:var(--bg);
+  clip-path:inset(0 0 100% 0);visibility:hidden;
+  transition:clip-path var(--d-slow) var(--e),visibility 0s var(--d-slow);
+  display:flex;flex-direction:column;overflow-y:auto}
+.ovl.is-open{clip-path:inset(0 0 0 0);visibility:visible;transition:clip-path var(--d-slow) var(--e)}
+.ovl__top{display:flex;align-items:center;justify-content:space-between;height:var(--hdr);flex:none}
+.ovl__body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:var(--s5);
+  padding-block:var(--s6)}
+.ovl__list a{display:block;font-size:clamp(34px,7.4vw,86px);font-weight:500;line-height:1.02;
+  letter-spacing:-.035em;text-transform:uppercase;color:var(--text);
+  transition:opacity var(--d-fast) var(--e),transform var(--d) var(--e)}
+.ovl__list a[aria-current="page"]::before{content:"◆ ";font-size:.4em;vertical-align:.5em;
+  color:var(--hot)}
+@media (hover:hover){
+  .ovl__list:hover a:not(:hover){opacity:.42}
+  .ovl__list a:hover,.ovl__list a:focus-visible{transform:translateX(14px)}
+}
+.ovl__meta{display:grid;gap:var(--s4);grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  border-top:1px solid var(--line);padding-top:var(--s4)}
+
+/* ============================================================
+   Материя: пластина товара и растр
+   ============================================================ */
+.matter{position:relative;overflow:hidden;background:var(--surface);aspect-ratio:3/4}
+.matter__img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:opacity var(--d) var(--e),transform var(--d-slow) var(--e)}
+.matter__img--b{position:absolute;inset:0;opacity:0}
+.matter__ras{position:absolute;inset:0;width:100%;height:100%;opacity:0;
+  image-rendering:pixelated;transition:opacity .3s steps(4)}
+.matter.is-ras .matter__ras{opacity:1}
+
+/* ============================================================
+   Формы
+   ============================================================ */
+.field{position:relative;display:block;margin-bottom:var(--s4)}
+.field__inp{width:100%;background:transparent;border:0;border-bottom:1px solid var(--line);
+  padding:22px 0 9px;font-size:var(--t-m);color:var(--text);border-radius:0;
+  transition:border-color var(--d-fast) var(--e)}
+.field__inp::placeholder{color:transparent}
+.field__lb{position:absolute;left:0;top:20px;font-family:var(--f-mono);font-size:var(--t-s);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--dim);pointer-events:none;
+  transform-origin:0 50%;transition:transform var(--d) var(--e),color var(--d-fast) var(--e)}
+.field__inp:focus + .field__lb,
+.field__inp:not(:placeholder-shown) + .field__lb{transform:translateY(-20px) scale(.82);color:var(--muted)}
+.field__inp:focus{border-color:var(--text);outline:none}
+.field__inp:focus + .field__lb{color:var(--text)}
+.field__err{display:block;margin-top:7px;font-family:var(--f-mono);font-size:var(--t-xs);
+  letter-spacing:.1em;text-transform:uppercase;color:var(--hot);
+  opacity:0;transform:translateY(-4px);transition:opacity var(--d-fast) var(--e),transform var(--d-fast) var(--e)}
+.field.is-bad .field__inp{border-color:var(--hot)}
+.field.is-bad .field__err{opacity:1;transform:translateY(0)}
+.field.is-ok .field__inp{border-color:rgba(154,209,164,.55)}
+textarea.field__inp{min-height:120px;resize:vertical}
+
+/* ============================================================
+   Аккордеон — bymonolog: grid-template-rows .6s cubic-bezier(.625,.05,0,1)
+   ============================================================ */
+.acc__item{border-top:1px solid var(--line)}
+.acc__item:last-child{border-bottom:1px solid var(--line)}
+.acc__btn{width:100%;display:flex;align-items:center;justify-content:space-between;gap:var(--s4);
+  padding:var(--s4) 0;text-align:left;
+  transition:color var(--d-fast) var(--e)}
+.acc__btn:hover{color:var(--text)}
+.acc__n{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.16em;color:var(--dim);
+  flex:none;width:34px}
+.acc__t{flex:1;font-size:var(--t-m);font-weight:400;letter-spacing:-.01em}
+.acc__x{position:relative;width:13px;height:13px;flex:none}
+.acc__x::before,.acc__x::after{content:"";position:absolute;background:currentColor;
+  transition:transform var(--d) var(--e),opacity var(--d) var(--e)}
+.acc__x::before{left:0;top:6px;width:13px;height:1px}
+.acc__x::after{left:6px;top:0;width:1px;height:13px}
+.acc__btn[aria-expanded="true"] .acc__x::after{transform:rotate(90deg);opacity:0}
+.acc__panel{display:grid;grid-template-rows:0fr;
+  transition:grid-template-rows .6s var(--e-acc)}
+.acc__btn[aria-expanded="true"] + .acc__panel{grid-template-rows:1fr}
+.acc__inner{overflow:hidden}
+.acc__inner > div{padding-bottom:var(--s4);max-width:66ch;color:var(--muted);font-size:var(--t-s);line-height:1.6}
+
+/* ============================================================
+   Корзина-панель
+   ============================================================ */
+.scrim{position:fixed;inset:0;z-index:100;background:rgba(4,4,4,.72);opacity:0;visibility:hidden;
+  transition:opacity var(--d) var(--e),visibility var(--d)}
+.scrim.is-open{opacity:1;visibility:visible}
+.drawer{position:fixed;top:0;right:0;bottom:0;z-index:101;width:min(440px,100%);
+  background:var(--bg-2);border-left:1px solid var(--line);
+  transform:translateX(101%);visibility:hidden;
+  transition:transform var(--d-slow) var(--e),visibility 0s var(--d-slow);
+  display:flex;flex-direction:column}
+.drawer.is-open{transform:translateX(0);visibility:visible;transition:transform var(--d-slow) var(--e)}
+.drawer__top{display:flex;align-items:center;justify-content:space-between;
+  padding:var(--s4);border-bottom:1px solid var(--line);flex:none}
+.drawer__body{flex:1;overflow-y:auto;padding:var(--s4)}
+.drawer__foot{flex:none;padding:var(--s4);border-top:1px solid var(--line)}
+.citem{display:grid;grid-template-columns:74px 1fr auto;gap:var(--s3);
+  padding-block:var(--s3);border-bottom:1px solid var(--line-2)}
+.citem__img{width:74px;aspect-ratio:3/4;object-fit:cover;background:var(--surface)}
+.citem__name{font-size:var(--t-s);letter-spacing:-.01em}
+.citem__meta{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.1em;
+  text-transform:uppercase;color:var(--dim);margin-top:5px}
+.qty{display:inline-flex;align-items:center;border:1px solid var(--line);margin-top:9px}
+.qty button{width:24px;height:24px;display:grid;place-items:center;color:var(--muted);
+  transition:color var(--d-fast) var(--e)}
+.qty button:hover{color:var(--text)}
+.qty span{min-width:24px;text-align:center;font-family:var(--f-mono);font-size:var(--t-xs)}
+.close{width:30px;height:30px;display:grid;place-items:center;position:relative}
+.close::before,.close::after{content:"";position:absolute;width:15px;height:1px;background:currentColor;
+  transition:transform var(--d) var(--e)}
+.close::before{transform:rotate(45deg)}
+.close::after{transform:rotate(-45deg)}
+.close:hover::before{transform:rotate(135deg)}
+.close:hover::after{transform:rotate(45deg)}
+
+/* ============================================================
+   Модалка
+   ============================================================ */
+.modal{position:fixed;inset:0;z-index:105;display:grid;place-items:center;padding:var(--s4);
+  opacity:0;visibility:hidden;transition:opacity var(--d) var(--e),visibility var(--d)}
+.modal.is-open{opacity:1;visibility:visible}
+.modal__box{position:relative;width:min(720px,100%);max-height:84vh;overflow-y:auto;
+  background:var(--bg-2);border:1px solid var(--line);padding:var(--s5);
+  transform:translateY(24px) scale(.98);transition:transform var(--d-slow) var(--e)}
+.modal.is-open .modal__box{transform:none}
+
+/* ============================================================
+   Подвал
+   ============================================================ */
+.ftr{border-top:1px solid var(--line);padding-top:var(--sec);position:relative;overflow:hidden}
+.ftr__cols{display:grid;gap:var(--s5);grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
+  padding-bottom:var(--s6)}
+.ftr__col h3{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.18em;text-transform:uppercase;
+  color:var(--dim);margin-bottom:var(--s3);font-weight:400}
+.ftr__col li + li{margin-top:9px}
+.ftr__col a{font-size:var(--t-s);color:var(--muted);transition:color var(--d-fast) var(--e)}
+.ftr__col a:hover{color:var(--text)}
+.ftr__word{font-size:clamp(70px,17.6vw,300px);font-weight:600;line-height:.76;letter-spacing:-.045em;
+  text-transform:uppercase;color:var(--surface-2);user-select:none;text-align:center;
+  padding-bottom:var(--s3);white-space:nowrap}
+.ftr__bar{border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:var(--s3) var(--s5);
+  align-items:center;justify-content:space-between;padding-block:var(--s3)}
+.ftr__bar span{font-family:var(--f-mono);font-size:var(--t-xs);letter-spacing:.14em;
+  text-transform:uppercase;color:var(--dim)}
+
+/* ============================================================
+   Утилиты появления (JS-гейт добавляет .is-in)
+   ============================================================ */
+[data-rv]{opacity:0}
+.no-motion [data-rv],.js-off [data-rv]{opacity:1}
+.split-line{display:block;overflow:hidden}
+.split-line > span{display:block;will-change:transform}
+
+/* ============================================================
+   Уважение к prefers-reduced-motion
+   ============================================================ */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.001ms !important;animation-iteration-count:1 !important;
+    transition-duration:.001ms !important;scroll-behavior:auto !important}
+  .grain{animation:none;opacity:.1}
+  .ticker__track{animation:none}
+  [data-rv]{opacity:1 !important;transform:none !important}
+  .snd__bars i{animation:none;height:7px}
+}

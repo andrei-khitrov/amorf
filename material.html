@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="ru" class="js-off">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Материя — как AMORF работает с веществом</title>
+<meta name="description" content="Как устроена работа AMORF с материалом: интерактивная модель состояний, пять основных материалов с паспортами и шесть этапов от сырья до архива.">
+<meta name="theme-color" content="#080807">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="AMORF">
+<meta property="og:title" content="Материя — как AMORF работает с веществом">
+<meta property="og:description" content="Как устроена работа AMORF с материалом: интерактивная модель состояний, пять основных материалов с паспортами и шесть этапов от сырья до архива.">
+<meta property="og:image" content="assets/img/p/s-01-a.webp">
+<meta property="og:locale" content="ru_RU">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='%23080807'/%3E%3Cg fill='none' stroke='%23E8E8E3' stroke-width='1.4'%3E%3Cpath d='M12 2.5V21.5M6 7.6H18M8.4 16.4H15.6'/%3E%3Cpath d='M12 8.8 15.2 12 12 15.2 8.8 12Z'/%3E%3C/g%3E%3C/svg%3E">
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/PPNeueMontreal-Medium.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="assets/fonts/GeistMono-Variable.woff2" crossorigin>
+<link rel="stylesheet" href="assets/css/tokens.css">
+<link rel="stylesheet" href="assets/css/sections.css">
+</head>
+<body data-page="material.html">
+<a class="skip" href="#main">К основному содержимому</a>
+<div class="progress" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="rails" aria-hidden="true">
+  <span class="rail-txt rail-txt--l">AMORF — лаборатория одежды</span>
+  <span class="rail-txt rail-txt--r">Фаза 03 · VEIL · 2026</span>
+</div>
+<div class="ticker" aria-hidden="true"><div class="ticker__track"><span class="ticker__i">Бесплатная доставка по России от 30 000 ₽</span><span class="ticker__i">Фаза 03 «VEIL» — в наличии</span><span class="ticker__i">Паспорт материала на каждую вещь</span><span class="ticker__i">Обмен и возврат 30 дней</span><span class="ticker__i">Шоурум: Москва, Нижний Сусальный, 5с19</span><span class="ticker__i">Ремонт изделий AMORF — бессрочно</span><span class="ticker__i">Бесплатная доставка по России от 30 000 ₽</span><span class="ticker__i">Фаза 03 «VEIL» — в наличии</span><span class="ticker__i">Паспорт материала на каждую вещь</span><span class="ticker__i">Обмен и возврат 30 дней</span><span class="ticker__i">Шоурум: Москва, Нижний Сусальный, 5с19</span><span class="ticker__i">Ремонт изделий AMORF — бессрочно</span></div></div>
+<header class="hdr">
+ <div class="wrap hdr__in">
+  <a class="hdr__brand" href="index.html" aria-label="AMORF — на главную">
+   <svg class="hdr__sig" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" aria-hidden="true"><path d="M12 1.5V22.5M5.3 7.3H18.7M7.7 16.7H16.3"/><path d="M12 8.5 15.5 12 12 15.5 8.5 12Z"/></svg><span class="hdr__word">AMORF</span>
+  </a>
+  <nav class="hdr__nav" aria-label="Основная навигация"><a href="catalog.html">Каталог</a><a href="lookbook.html">Лукбук</a><a href="material.html" aria-current="page">Материя</a><a href="about.html">Бренд</a><a href="service.html">Сервис</a></nav>
+  <div class="hdr__side">
+   <button class="snd" type="button" data-sound-toggle aria-pressed="false" aria-label="Включить звук интерфейса">
+    <span class="snd__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+   </button>
+   <button class="hdr__act" type="button" data-cart-open aria-label="Открыть корзину">
+    Корзина <span class="hdr__count mono" data-cart-count>00</span>
+   </button>
+   <button class="burg" type="button" data-ovl-open aria-expanded="false" aria-controls="ovl" aria-label="Открыть меню">
+    <i></i><i></i>
+   </button>
+  </div>
+ </div>
+</header>
+
+<div class="ovl" id="ovl" data-ovl aria-hidden="true">
+ <div class="wrap ovl__top">
+  <span class="lbl">Меню</span>
+  <button class="close" type="button" data-ovl-close aria-label="Закрыть меню"></button>
+ </div>
+ <div class="wrap ovl__body">
+  <nav class="ovl__list" aria-label="Меню">
+   <a href="index.html">Главная</a><a href="catalog.html">Каталог</a><a href="lookbook.html">Лукбук</a><a href="material.html" aria-current="page">Материя</a><a href="about.html">Бренд</a><a href="service.html">Сервис</a><a href="contact.html">Контакты</a>
+  </nav>
+  <div class="ovl__meta">
+   <div><span class="lbl">Шоурум</span><p class="body mt3" style="font-size:var(--t-s)">Москва, Нижний Сусальный, 5с19<br>Пн–Вс, 12:00–21:00</p></div>
+   <div><span class="lbl">Связь</span><p class="body mt3" style="font-size:var(--t-s)"><a class="ulink" href="mailto:hello@amorf.studio">hello@amorf.studio</a><br><a class="ulink" href="tel:+74951234567">+7 495 123-45-67</a></p></div>
+   <div><span class="lbl">Время</span><p class="body mt3 mono" style="font-size:var(--t-s)"><span data-clock>00:00:00</span> MSK</p></div>
+  </div>
+ </div>
+</div>
+<main id="main">
+
+<section class="wrap pt-hdr">
+ <span class="lbl lbl--b" data-rv="still">Материя</span>
+ <h1 class="h-1 mt3" data-rv="still">Вещество и его состояния</h1>
+ <p class="body mt4" data-rv>Ниже — рабочая модель, которой лаборатория пользуется при разборе материала. Двигайте температуру: решётка сначала держится, потом провисает, потом рассыпается. Ровно это происходит с полотном, и ровно на этом построены четыре фазы.</p>
+</section>
+
+<section class="section--tight">
+ <div class="wrap lab">
+  <canvas class="lab__cv" data-lab width="720" height="720" role="img" aria-label="Модель решётки материала: с ростом температуры узлы теряют порядок и рассеиваются"></canvas>
+  <div class="lab__ctrl">
+   <div>
+    <div class="pdp__lbrow"><span class="lbl">Температура</span><span class="mono" data-lab-out>0.20</span></div>
+    <input class="range" type="range" min="0" max="100" value="20" data-lab-range aria-label="Температура модели материала">
+   </div>
+   <div>
+    <div class="pdp__lbrow"><span class="lbl">Плотность решётки</span><span class="mono" data-lab-dens-out>26</span></div>
+    <input class="range" type="range" min="10" max="46" value="26" data-lab-dens aria-label="Плотность решётки">
+   </div>
+   <div class="spec">
+    <div class="spec__r"><span class="spec__k">Состояние</span><span data-lab-state>Solid</span></div>
+    <div class="spec__r"><span class="spec__k">Фаза каталога</span><span data-lab-phase>01 · SOLID</span></div>
+    <div class="spec__r"><span class="spec__k">Поведение</span><span data-lab-beh>Форма держится без тела</span></div>
+   </div>
+   <div style="display:flex;gap:10px;flex-wrap:wrap">
+    <a class="btn" href="catalog.html" data-lab-link data-mag>Вещи в этом состоянии</a>
+    <button class="btn" type="button" data-lab-play data-mag>Прогнать все фазы</button>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section class="section--tight" aria-labelledby="mats-t">
+ <div class="wrap" style="padding-bottom:var(--s4)">
+  <h2 class="h-2" id="mats-t" data-rv="still">Одиннадцать материалов, пять основных</h2>
+ </div>
+ <div class="mats"><article class="mat"><span class="mat__n">Материал 01</span><h3 class="mat__t">Гибридная органза</h3><p class="body" style="font-size:var(--t-s)">Самый лёгкий материал лаборатории. Держит форму за счёт кручения нити, а не за счёт пропитки.</p><div class="spec mt3"><div class="spec__r"><span class="spec__k">Плотность</span><span class="mono">42 г/м²</span></div><div class="spec__r"><span class="spec__k">Состав</span><span>Полиамид</span></div><div class="spec__r"><span class="spec__k">Фабрика</span><span>Швейцария, Санкт-Галлен</span></div></div></article><article class="mat"><span class="mat__n">Материал 02</span><h3 class="mat__t">Матлассе</h3><p class="body" style="font-size:var(--t-s)">Двухслойное полотно с воздушной прослойкой. Объём получается на станке, а не за счёт подкладки.</p><div class="spec mt3"><div class="spec__r"><span class="spec__k">Плотность</span><span class="mono">240–260 г/м²</span></div><div class="spec__r"><span class="spec__k">Состав</span><span>Хлопок / полиамид</span></div><div class="spec__r"><span class="spec__k">Фабрика</span><span>Япония, Киото</span></div></div></article><article class="mat"><span class="mat__n">Материал 03</span><h3 class="mat__t">Жидкий миртия</h3><p class="body" style="font-size:var(--t-s)">Ведёт себя как жидкость: на любом наклоне ищет нижнюю точку. Кроится только по косой.</p><div class="spec mt3"><div class="spec__r"><span class="spec__k">Плотность</span><span class="mono">145 г/м²</span></div><div class="spec__r"><span class="spec__k">Состав</span><span>Вискоза / шёлк</span></div><div class="spec__r"><span class="spec__k">Фабрика</span><span>Италия, Комо</span></div></div></article><article class="mat"><span class="mat__n">Материал 04</span><h3 class="mat__t">Переработанный кашемир</h3><p class="body" style="font-size:var(--t-s)">Собран из производственных остатков и разобранного трикотажа. По плотности не уступает первичному.</p><div class="spec mt3"><div class="spec__r"><span class="spec__k">Плотность</span><span class="mono">380 г/м²</span></div><div class="spec__r"><span class="spec__k">Состав</span><span>Кашемир / шерсть</span></div><div class="spec__r"><span class="spec__k">Фабрика</span><span>Италия, Прато</span></div></div></article><article class="mat"><span class="mat__n">Материал 05</span><h3 class="mat__t">Технический нейлон</h3><p class="body" style="font-size:var(--t-s)">Трёхслойная мембрана. Изначально сделана для парусов, у нас держит плечо бомбера.</p><div class="spec mt3"><div class="spec__r"><span class="spec__k">Плотность</span><span class="mono">210 г/м²</span></div><div class="spec__r"><span class="spec__k">Состав</span><span>Полиамид, три слоя</span></div><div class="spec__r"><span class="spec__k">Фабрика</span><span>Япония, Осака</span></div></div></article></div>
+</section>
+
+<section class="section" aria-labelledby="proc-t">
+ <div class="wrap">
+  <h2 class="h-1" id="proc-t" data-rv="still" style="margin-bottom:var(--s5)">От сырья до архива</h2>
+  <div class="steps"><div class="step" data-rv><span class="step__n">Этап 01</span><h3 class="step__t">Отбор сырья</h3><p class="step__d">Мы начинаем с фабрики, а не с эскиза. Из одиннадцати материалов в работе восемь закреплены за конкретными производствами, с которыми лаборатория работает не первый год.</p></div><div class="step" data-rv><span class="step__n">Этап 02</span><h3 class="step__t">Измерение</h3><p class="step__d">Каждая партия проходит замер плотности, усадки и поведения на изгибе. Цифры из этого протокола попадают в паспорт материала и в карточку на сайте.</p></div><div class="step" data-rv><span class="step__n">Этап 03</span><h3 class="step__t">Форма из материала</h3><p class="step__d">Крой рождается из того, что материал уже умеет. Если полотно ищет нижнюю точку — мы не заставляем его стоять, а строим вещь вокруг стекания.</p></div><div class="step" data-rv><span class="step__n">Этап 04</span><h3 class="step__t">Прототип и износ</h3><p class="step__d">Три прототипа на изделие. Каждый носится не меньше двух недель и проходит цикл стирки по режиму, который потом попадёт на бирку.</p></div><div class="step" data-rv><span class="step__n">Этап 05</span><h3 class="step__t">Тираж</h3><p class="step__d">От сорока до ста двадцати изделий. Тираж закрывается вместе с фазой, лекала уходят в архив, перевыпуска не бывает.</p></div><div class="step" data-rv><span class="step__n">Этап 06</span><h3 class="step__t">Архив и ремонт</h3><p class="step__d">Остатки материала каждой фазы хранятся под ремонт. Изделие AMORF можно принести в мастерскую через сколько угодно лет.</p></div></div>
+ </div>
+</section>
+
+<section class="section--tight">
+ <div class="wrap center">
+  <p class="lead" data-rv style="margin-inline:auto">Паспорт материала лежит в каждой карточке товара — вместе с плотностью, фабрикой и режимом ухода.</p>
+  <a class="btn btn--lg btn--solid mt5" href="catalog.html" data-mag>Открыть каталог</a>
+ </div>
+</section>
+
+</main>
+<footer class="ftr">
+ <div class="wrap">
+  <div class="ftr__cols">
+   <div class="ftr__col"><h3>Каталог</h3><ul><li><a href="catalog.html?phase=solid">Фаза 01 · SOLID</a></li><li><a href="catalog.html?phase=fluid">Фаза 02 · FLUID</a></li><li><a href="catalog.html?phase=veil">Фаза 03 · VEIL</a></li><li><a href="catalog.html?phase=core">Фаза 04 · CORE</a></li><li><a href="catalog.html">Всё сразу</a></li></ul></div><div class="ftr__col"><h3>Бренд</h3><ul><li><a href="about.html">О лаборатории</a></li><li><a href="material.html">Материя</a></li><li><a href="lookbook.html">Лукбук</a></li><li><a href="contact.html">Контакты</a></li></ul></div><div class="ftr__col"><h3>Сервис</h3><ul><li><a href="service.html#delivery">Доставка</a></li><li><a href="service.html#returns">Возврат</a></li><li><a href="service.html#care">Уход</a></li><li><a href="service.html#sizes">Размеры</a></li><li><a href="service.html#faq">Вопросы</a></li></ul></div>
+   <div class="ftr__col">
+    <h3>Подписка</h3>
+    <p class="body" style="font-size:var(--t-s);margin-bottom:14px">Письмо перед каждой фазой. Не чаще четырёх раз в год.</p>
+    <form data-form="sub" data-ok="Готово. Письмо придёт перед фазой 04." novalidate>
+     <label class="field" style="margin-bottom:12px">
+      <input class="field__inp" type="email" name="email" placeholder=" " data-rule="required email" autocomplete="email" required>
+      <span class="field__lb">Почта</span>
+      <span class="field__err" role="alert"></span>
+     </label>
+     <button class="btn btn--block" type="submit" data-mag>Подписаться</button>
+     <p class="msg mt3" data-form-msg role="status"></p>
+    </form>
+   </div>
+  </div>
+ </div>
+ <div class="wrap wrap--flush"><div class="ftr__word" aria-hidden="true">AMORF</div></div>
+ <div class="wrap">
+  <div class="ftr__bar">
+   <span>© 2026 AMORF · Лаборатория одежды</span>
+   <span>Москва · <span data-clock class="mono">00:00:00</span> MSK</span>
+   <span>Фаза 03 · VEIL · в наличии</span>
+   <span><a class="ulink" href="service.html#legal">Оферта и политика данных</a></span>
+  </div>
+ </div>
+</footer>
+
+<div class="scrim" data-scrim aria-hidden="true"></div>
+<aside class="drawer" data-drawer aria-hidden="true" aria-label="Корзина">
+ <div class="drawer__top">
+  <span class="lbl">Корзина · <span data-cart-n>0</span></span>
+  <button class="close" type="button" data-cart-close aria-label="Закрыть корзину"></button>
+ </div>
+ <div class="drawer__body" data-cart-body></div>
+ <div class="drawer__foot">
+  <div class="shipbar" data-shipbar hidden>
+   <p class="shipbar__t"></p>
+   <div class="shipbar__track"><span class="shipbar__fill"></span></div>
+  </div>
+  <div class="sum__r"><span>Доставка</span><span data-ship-out>—</span></div>
+  <div class="sum__r sum__r--tot"><span>Итого</span><span data-cart-total>0 ₽</span></div>
+  <a class="btn btn--solid btn--block mt3" href="checkout.html" data-checkout>Оформить заказ</a>
+ </div>
+</aside>
+<script src="assets/js/vendor/gsap.min.js"></script>
+<script src="assets/js/vendor/ScrollTrigger.min.js"></script>
+<script src="assets/js/vendor/SplitText.min.js"></script>
+<script src="assets/js/vendor/Observer.min.js"></script>
+<script src="assets/js/vendor/CustomEase.min.js"></script>
+<script src="assets/js/vendor/lenis.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/material.js" data-page-js></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
